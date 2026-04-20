@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend-app
+  namespace: argocd   # Argo CD runs in this namespace
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/suwetha07/rollout.git
+    targetRevision: HEAD
+    path: rollout   # folder where active.yml, preview.yml, rollout.yml exist
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: frontui
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
